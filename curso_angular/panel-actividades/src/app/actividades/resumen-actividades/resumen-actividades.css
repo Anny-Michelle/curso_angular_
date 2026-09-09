@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.encabezado-seccion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.metricas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.metricas li {
+  padding: 0.9rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.metricas strong,
+.metricas span {
+  display: block;
+}
+
+.metricas strong {
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+@media (min-width: 40rem) {
+  .metricas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

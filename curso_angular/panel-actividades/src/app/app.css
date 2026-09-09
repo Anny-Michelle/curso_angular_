@@ -1,0 +1,31 @@
+ :host {
+	display: block;
+}
+
+.contenedor {
+	max-width: 60rem;
+	margin: 0 auto;
+	padding: 0 1rem;
+}
+
+.cabecera {
+	padding: 1rem 0;
+	border-bottom: 1px solid #cbd5e1;
+}
+
+.marca {
+	margin: 0;
+	font-weight: 700;
+}
+
+h1 {
+	margin: 2rem 0 1rem;
+	font-size: 1.9rem;
+	line-height: 1.2;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline: 3px solid #b45309;
+	outline-offset: 2px;
+}
