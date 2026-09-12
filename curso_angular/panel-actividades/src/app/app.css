@@ -1,31 +1,80 @@
  :host {
 	display: block;
+	min-height: 100vh;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+	font-family: 'Trebuchet MS', sans-serif;
+	background:
+		radial-gradient(circle at 8% 12%, rgba(225, 112, 125, 0.16), transparent 24rem),
+		radial-gradient(circle at 92% 4%, rgba(126, 158, 132, 0.16), transparent 26rem),
+		#fbf6f1;
+	color: #3f3740;
 }
 
 .contenedor {
-	max-width: 60rem;
+	max-width: 68rem;
 	margin: 0 auto;
-	padding: 0 1rem;
+	padding: 0 1rem 2rem;
 }
 
 .cabecera {
-	padding: 1rem 0;
-	border-bottom: 1px solid #cbd5e1;
+	padding: 1.15rem 0;
+	border-bottom: 1px solid rgba(181, 72, 102, 0.25);
+	background: linear-gradient(105deg, #4b2d3b 0%, #9e4f68 58%, #e7a07d 140%);
+	backdrop-filter: blur(12px);
 }
 
 .marca {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.8rem;
 	margin: 0;
-	font-weight: 700;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	color: #f8fafc;
+	text-decoration: none;
 }
 
 h1 {
-	margin: 2rem 0 1rem;
-	font-size: 1.9rem;
-	line-height: 1.2;
+	margin: 2.5rem 0 1.25rem;
+	font-family: Georgia, serif;
+	font-size: clamp(2.3rem, 4vw, 3.8rem);
+	line-height: 1.1;
+	letter-spacing: 0;
+	color: #4b2d3b;
+}
+
+.pie-pagina {
+	margin-top: 2rem;
+	border-top: 1px solid rgba(181, 72, 102, 0.3);
+	background: rgba(255, 250, 247, 0.86);
+}
+
+.pie-contenido {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.75rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	color: #334155;
+	font-size: 0.95rem;
+}
+
+.pie-contenido p,
+.pie-contenido span {
+	margin: 0;
 }
 
 a:focus-visible,
 button:focus-visible {
-	outline: 3px solid #b45309;
+	outline: 3px solid #f59e0b;
 	outline-offset: 2px;
 }

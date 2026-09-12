@@ -1,18 +1,37 @@
-<section aria-labelledby="lista-titulo">
+<section aria-labelledby="lista-titulo" class="panel-actividades">
   <div class="encabezado-seccion">
-    <h2 id="lista-titulo">Actividades recientes</h2>
-    <p>{{ actividades.length }} en la vista</p>
+    <h2 id="lista-titulo">Actividades</h2>
+    <span class="contador">{{ actividades.length }} tareas</span>
   </div>
 
   <ul class="lista">
-    @for (actividad of actividades; track actividad.id; let posicion = $index) {
-      <li>
-        <div>
-          <p class="posicion">Actividad {{ posicion + 1 }}</p>
+    @for (actividad of actividades; track actividad.id) {
+      <li
+        class="tarjeta-actividad"
+        [class.prioridad-alta]="actividad.prioridad === 'alta'"
+        [class.prioridad-media]="actividad.prioridad === 'media'"
+        [class.prioridad-baja]="actividad.prioridad === 'baja'"
+      >
+        <div class="cabecera-tarjeta">
           <h3>{{ actividad.titulo }}</h3>
-          <p>Creada el {{ actividad.creadaEn | date: 'd MMM y' }}</p>
+          @switch (actividad.estado) {
+            @case ('pendiente') { <span class="estado-badge estado-pendiente">Pendiente</span> }
+            @case ('en_progreso') { <span class="estado-badge estado-progreso">En progreso</span> }
+            @case ('completada') { <span class="estado-badge estado-completada">Completada</span> }
+          }
         </div>
-        <span class="prioridad">{{ actividad.prioridad | titlecase }}</span>
+
+        <div class="meta-tarjeta">
+          <span class="prioridad-badge prioridad-{{ actividad.prioridad }}">Prioridad {{ actividad.prioridad }}</span>
+          <span class="fecha">Registrada el {{ actividad.creadaEn | date: 'dd/MM/y' }}</span>
+        </div>
+
+        <div class="acciones-lista">
+          <button type="button" class="boton principal">Seleccionar</button>
+          <button type="button" class="boton secundario">Destacar</button>
+          <button type="button" class="boton accent">Avanzar estado</button>
+          <button type="button" class="boton eliminar">Eliminar</button>
+        </div>
       </li>
     } @empty {
       <li class="estado-vacio">

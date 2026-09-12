@@ -7,8 +7,8 @@ import type { EstadoActividad, Prioridad } from '../../modelos/actividad';
   styleUrl: './tarjeta-actividad.css'
 })
 export class TarjetaActividad {
-  protected readonly titulo = 'Practicar TypeScript';
-  protected readonly descripcion = 'Conectar contratos tipados con un template Angular.';
+  protected readonly titulo = 'Resolver problemas de álgebra';
+  protected readonly descripcion = 'Repasar ecuaciones, despejes y reglas básicas de simplificación para reforzar la lógica matemática.';
   protected readonly prioridad: Prioridad = 'alta';
   protected estado: EstadoActividad = 'pendiente';
   protected detallesVisibles = false;

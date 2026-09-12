@@ -2,15 +2,24 @@
 
 <header class="cabecera">
   <div class="contenedor">
-    <p class="marca">Panel de actividades</p>
+    <a class="marca" href="#contenido" aria-label="Ir al tablero de matemáticas">
+      <span>Tablero de matemáticas</span>
+    </a>
   </div>
 </header>
 
 <main id="contenido" class="contenedor">
-  <h1>Panel de actividades</h1>
+  <h1>Tablero de matemáticas</h1>
   <app-resumen-actividades />
   <app-tarjeta-actividad />
-  <app-lista-actividades />
+  <app-tablero-prioridades />
 </main>
+
+<footer class="pie-pagina">
+  <div class="contenedor pie-contenido">
+    <p>© 2026 Tablero de matemáticas</p>
+    <span>Seguimiento claro y motivador para estudiar</span>
+  </div>
+</footer>
 
 <router-outlet />
