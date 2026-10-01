@@ -1,0 +1,14 @@
+<section class="panel">
+  <header class="panel__cabecera">
+    <h3 class="panel__titulo">{{ titulo() }}</h3>
+    <div class="panel__acciones">
+      <ng-content select="[acciones]" />
+    </div>
+  </header>
+
+  <div class="panel__cuerpo">
+    <ng-content>
+      <p class="panel__vacio">Esta sección todavía no tiene contenido.</p>
+    </ng-content>
+  </div>
+</section>

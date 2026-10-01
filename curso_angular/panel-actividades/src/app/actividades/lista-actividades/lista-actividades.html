@@ -1,43 +1,20 @@
-<section aria-labelledby="lista-titulo" class="panel-actividades">
-  <div class="encabezado-seccion">
-    <h2 id="lista-titulo">Actividades</h2>
-    <span class="contador">{{ actividades.length }} tareas</span>
-  </div>
-
-  <ul class="lista">
-    @for (actividad of actividades; track actividad.id) {
-      <li
-        class="tarjeta-actividad"
-        [class.prioridad-alta]="actividad.prioridad === 'alta'"
-        [class.prioridad-media]="actividad.prioridad === 'media'"
-        [class.prioridad-baja]="actividad.prioridad === 'baja'"
-      >
-        <div class="cabecera-tarjeta">
-          <h3>{{ actividad.titulo }}</h3>
-          @switch (actividad.estado) {
-            @case ('pendiente') { <span class="estado-badge estado-pendiente">Pendiente</span> }
-            @case ('en_progreso') { <span class="estado-badge estado-progreso">En progreso</span> }
-            @case ('completada') { <span class="estado-badge estado-completada">Completada</span> }
-          }
-        </div>
-
-        <div class="meta-tarjeta">
-          <span class="prioridad-badge prioridad-{{ actividad.prioridad }}">Prioridad {{ actividad.prioridad }}</span>
-          <span class="fecha">Registrada el {{ actividad.creadaEn | date: 'dd/MM/y' }}</span>
-        </div>
-
-        <div class="acciones-lista">
-          <button type="button" class="boton principal">Seleccionar</button>
-          <button type="button" class="boton secundario">Destacar</button>
-          <button type="button" class="boton accent">Avanzar estado</button>
-          <button type="button" class="boton eliminar">Eliminar</button>
-        </div>
-      </li>
-    } @empty {
-      <li class="estado-vacio">
-        <h3>No hay actividades</h3>
-        <p>Crea una actividad cuando estes listo para comenzar.</p>
-      </li>
-    }
-  </ul>
-</section>
+<ul #lista class="lista" tabindex="-1" aria-label="Actividades">
+  @for (actividad of actividades(); track actividad.id) {
+    <li>
+      <app-tarjeta-actividad
+        [actividad]="actividad"
+        [seleccionada]="actividad.id === seleccionadaId()"
+        (seleccionCambiada)="seleccionCambiada.emit($event)"
+        (destacadoCambiado)="destacadoCambiado.emit($event)"
+        (avanceSolicitado)="avanceSolicitado.emit($event)"
+        (eliminacionSolicitada)="solicitarEliminacion($event)" />
+    </li>
+  } @empty {
+    <li class="vacio">
+      <p>{{ mensajeVacio() }}</p>
+      @if (hayFiltros()) {
+        <button type="button" (click)="limpiezaSolicitada.emit()">Quitar los filtros</button>
+      }
+    </li>
+  }
+</ul>

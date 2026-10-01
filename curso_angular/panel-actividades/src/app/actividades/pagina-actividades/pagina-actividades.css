@@ -1,0 +1,103 @@
+.tablero {
+  --tinta: #3f3740;
+  --azul: #537b69;
+  --azul-claro: #e8f1eb;
+  --ambar: #c96b4b;
+  --rojo: #b54866;
+  --borde: #ead9dc;
+  --fondo: #fffdfb;
+  --fondo-suave: #fbf1f2;
+  --success: #47745e;
+  --violeta: #8f4f68;
+  color: var(--tinta);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 3rem 0;
+  padding: 1.5rem;
+  border: 1px solid rgba(181, 72, 102, 0.18);
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, #fffdfb 0%, #fbf3f0 100%);
+  box-shadow: 0 1rem 2rem rgba(75, 45, 59, 0.08);
+}
+
+.encabezado-tablero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 7.5rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.25rem;
+  background: linear-gradient(112deg, #4b2d3b 0%, #9e4f68 62%, #e7a07d 145%);
+  color: #fff;
+  box-shadow: 0 1.25rem 2rem rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.encabezado-tablero h2 {
+  margin: 0.35rem 0 0.25rem;
+  font-size: clamp(2rem, 2.2vw, 2.7rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+  font-family: Georgia, serif;
+  font-weight: 800;
+}
+
+.etiqueta-seccion {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.subtitulo {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.98rem;
+}
+
+.boton-secundario {
+  border-color: rgba(181, 72, 102, 0.2);
+  background: rgba(181, 72, 102, 0.05);
+  color: #8f405e;
+}
+
+.seleccionada {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  border-left: 4px solid #4f46e5;
+  border-radius: 0.8rem;
+  background: rgba(79, 70, 229, 0.06);
+}
+
+.anuncio {
+  margin: 0.75rem 0 0;
+}
+
+.solo-lector {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+@media (max-width: 36rem) {
+  .tablero {
+    padding: 1rem;
+  }
+
+  .encabezado-tablero {
+    padding: 1.25rem;
+  }
+}

@@ -1,12 +1,26 @@
-<section aria-labelledby="resumen-titulo">
-  <div class="encabezado-seccion">
-    <h2 id="resumen-titulo">Resumen</h2>
-    <p>{{ total }} actividades registradas</p>
+<div class="resumen">
+  <div class="avance" aria-label="Progreso general">
+    <div class="avance-linea">
+      <span>Avance general</span>
+      <strong>{{ porcentaje() }}%</strong>
+    </div>
+    <div
+      class="barra-avance"
+      role="progressbar"
+      aria-label="Avance general del tablero"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      [attr.aria-valuenow]="porcentaje()"
+    >
+      <span [style.width.%]="porcentaje()"></span>
+    </div>
   </div>
 
-  <ul class="metricas" aria-label="Metricas de actividades">
-    <li><strong>{{ pendientes }}</strong><span>Pendientes</span></li>
-    <li><strong>{{ enProgreso }}</strong><span>En progreso</span></li>
-    <li><strong>{{ completadas }}</strong><span>Completadas</span></li>
+  <ul class="metricas">
+    <li><strong>{{ total() }}</strong><span>Total</span></li>
+    <li><strong>{{ pendientes() }}</strong><span>Pendientes</span></li>
+    <li><strong>{{ enProgreso() }}</strong><span>En progreso</span></li>
+    <li><strong>{{ completadas() }}</strong><span>Completadas</span></li>
+    <li><strong>{{ porcentaje() }}%</strong><span>Completado</span></li>
   </ul>
-</section>
+</div>

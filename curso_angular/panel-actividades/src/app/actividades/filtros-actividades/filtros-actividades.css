@@ -1,0 +1,67 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.campo {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 12rem;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.campo input,
+.campo select,
+button {
+  padding: 0.6rem 0.8rem;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 0.8rem;
+  background: #fff;
+  color: var(--tinta, #3f3740);
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 0.8rem;
+  font: inherit;
+  font-weight: 700;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+button:focus-visible,
+.campo input:focus-visible,
+.campo select:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+.boton-principal {
+  background: linear-gradient(135deg, #b54866 0%, #8f405e 100%);
+  color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(181, 72, 102, 0.22);
+}

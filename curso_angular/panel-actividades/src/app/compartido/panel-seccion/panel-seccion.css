@@ -1,0 +1,36 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.panel__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.panel__titulo {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.panel__acciones:empty {
+  display: none;
+}
+
+.panel__cuerpo {
+  min-width: 0;
+}
+
+.panel__vacio {
+  color: #52606d;
+}
