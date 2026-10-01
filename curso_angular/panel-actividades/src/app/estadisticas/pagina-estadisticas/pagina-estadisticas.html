@@ -1,0 +1,25 @@
+<section class="estadisticas" aria-labelledby="titulo-estadisticas">
+  <div class="encabezado-estadisticas">
+    <p class="etiqueta">SEGUIMIENTO</p>
+    <h2 id="titulo-estadisticas">Estadísticas</h2>
+  </div>
+
+  <ul class="cifras">
+    <li class="total">
+      <strong>{{ total() }}</strong>
+      <span>Actividades</span>
+    </li>
+    <li class="pendientes">
+      <strong>{{ pendientes() }}</strong>
+      <span>Pendientes</span>
+    </li>
+    <li class="progreso">
+      <strong>{{ enProgreso() }}</strong>
+      <span>En progreso</span>
+    </li>
+    <li class="completadas">
+      <strong>{{ completadas() }}</strong>
+      <span>Completadas</span>
+    </li>
+  </ul>
+</section>

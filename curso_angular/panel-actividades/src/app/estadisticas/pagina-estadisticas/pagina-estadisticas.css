@@ -1,0 +1,92 @@
+:host {
+  display: block;
+}
+
+.estadisticas {
+  margin: 0 0 3rem;
+  padding: 1.75rem 0 1rem;
+  border-top: 1px solid rgba(181, 72, 102, 0.25);
+  color: #3f3740;
+}
+
+.encabezado-estadisticas {
+  margin-bottom: 1.25rem;
+}
+
+.etiqueta {
+  margin: 0 0 0.3rem;
+  color: #537b69;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.encabezado-estadisticas h2 {
+  margin: 0;
+  color: #4b2d3b;
+  font-family: Georgia, serif;
+  font-size: 1.65rem;
+}
+
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cifras li {
+  min-width: 0;
+  padding: 0.35rem 1rem 0.45rem;
+  border-left: 3px solid var(--acento, #8f4f68);
+}
+
+.cifras .pendientes {
+  --acento: #c96b4b;
+}
+
+.cifras .progreso {
+  --acento: #537b69;
+}
+
+.cifras .completadas {
+  --acento: #47745e;
+}
+
+.cifras strong,
+.cifras span {
+  display: block;
+}
+
+.cifras strong {
+  color: var(--acento, #8f4f68);
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.cifras span {
+  color: #625861;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 40rem) {
+  .estadisticas {
+    padding: 1.4rem 0 0.5rem;
+  }
+
+  .cifras {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 0;
+  }
+
+  .cifras li:nth-child(odd) {
+    padding-left: 0.65rem;
+  }
+
+  .cifras li:nth-child(even) {
+    padding-right: 0.25rem;
+  }
+}

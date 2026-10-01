@@ -101,3 +101,13 @@
     padding: 1.25rem;
   }
 }
+
+.aviso-persistencia {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(201, 107, 75, 0.35);
+  border-left: 4px solid #c96b4b;
+  border-radius: 0.5rem;
+  background: #fff7e6;
+  color: #66422f;
+}
