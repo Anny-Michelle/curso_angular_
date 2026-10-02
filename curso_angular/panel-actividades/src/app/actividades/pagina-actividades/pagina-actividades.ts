@@ -1,4 +1,5 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ETIQUETAS, FiltroEstado, FiltroPrioridad, Prioridad } from '../../modelos/actividad';
 import { FiltrosActividades } from '../filtros-actividades/filtros-actividades';
 import { ListaActividades } from '../lista-actividades/lista-actividades';
@@ -14,15 +15,27 @@ import { ActividadesService } from '../actividades';
 })
 export class PaginaActividades {
   private readonly servicio = inject(ActividadesService);
+  private readonly router = inject(Router);
+  private readonly ruta = inject(ActivatedRoute);
   private readonly orden: Record<Prioridad, number> = { alta: 0, media: 1, baja: 2 };
 
   protected readonly actividades = this.servicio.actividades;
   protected readonly aviso = this.servicio.aviso;
   protected readonly sinGuardar = this.servicio.sinGuardar;
 
-  protected readonly termino = signal('');
-  protected readonly filtroEstado = signal<FiltroEstado>('todas');
-  protected readonly filtroPrioridad = signal<FiltroPrioridad>('todas');
+  readonly buscar = input<string | undefined>('');
+  readonly estado = input<string | undefined>('todas');
+  readonly prioridad = input<string | undefined>('todas');
+
+  protected readonly termino = computed(() => this.buscar() ?? '');
+  protected readonly filtroEstado = computed<FiltroEstado>(() => {
+    const valor = this.estado();
+    return valor === 'pendiente' || valor === 'en_progreso' || valor === 'completada' ? valor : 'todas';
+  });
+  protected readonly filtroPrioridad = computed<FiltroPrioridad>(() => {
+    const valor = this.prioridad();
+    return valor === 'alta' || valor === 'media' || valor === 'baja' ? valor : 'todas';
+  });
   protected readonly seleccionadaId = signal<number | null>(null);
   protected readonly ultimoAviso = signal('');
 
@@ -98,10 +111,20 @@ export class PaginaActividades {
     if (actividad) this.ultimoAviso.set(`Actividad eliminada: ${actividad.titulo}.`);
   }
 
+  protected cambiarBuscar(valor: string): void {
+    this.actualizar({ buscar: valor.trim() === '' ? null : valor });
+  }
+
+  protected cambiarEstado(valor: FiltroEstado): void {
+    this.actualizar({ estado: valor === 'todas' ? null : valor });
+  }
+
+  protected cambiarPrioridad(valor: FiltroPrioridad): void {
+    this.actualizar({ prioridad: valor === 'todas' ? null : valor });
+  }
+
   protected limpiarFiltros(): void {
-    this.termino.set('');
-    this.filtroEstado.set('todas');
-    this.filtroPrioridad.set('todas');
+    this.actualizar({ buscar: null, estado: null, prioridad: null });
     this.ultimoAviso.set('Filtros eliminados. Se muestran todas las actividades.');
   }
 
@@ -110,6 +133,15 @@ export class PaginaActividades {
     this.limpiarFiltros();
     this.seleccionadaId.set(null);
     this.ultimoAviso.set('Tablero vacío. Ya no quedan actividades.');
+  }
+
+  private actualizar(cambios: Record<string, string | null>): void {
+    void this.router.navigate([], {
+      relativeTo: this.ruta,
+      queryParams: cambios,
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
 }

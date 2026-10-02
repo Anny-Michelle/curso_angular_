@@ -30,6 +30,14 @@ body {
 	backdrop-filter: blur(12px);
 }
 
+.cabecera .contenedor {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
 .marca {
 	display: inline-flex;
 	align-items: center;
@@ -39,6 +47,26 @@ body {
 	letter-spacing: 0.02em;
 	color: #f8fafc;
 	text-decoration: none;
+}
+
+.menu {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.menu a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.menu a.activo {
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 0.25em;
 }
 
 h1 {

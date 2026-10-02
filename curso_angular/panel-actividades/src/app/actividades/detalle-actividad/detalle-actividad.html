@@ -1,0 +1,32 @@
+<div class="detalle">
+  <a routerLink="/actividades">Volver a las actividades</a>
+
+  @switch (resultado().estado) {
+    @case ('encontrada') {
+      @if (actividad(); as actual) {
+        <article class="contenido-detalle">
+          <p class="etiqueta">DETALLE DE ACTIVIDAD</p>
+          <h2>{{ actual.titulo }}</h2>
+          <dl>
+            <div><dt>Estado</dt><dd>{{ etiquetas[actual.estado] }}</dd></div>
+            <div><dt>Prioridad</dt><dd>{{ actual.prioridad }}</dd></div>
+            <div><dt>Creada</dt><dd>{{ actual.creadaEn }}</dd></div>
+          </dl>
+          <button class="boton-eliminar" type="button" (click)="eliminar()">Eliminar actividad</button>
+        </article>
+      }
+    }
+    @case ('invalido') {
+      <section class="estado-detalle" aria-live="polite">
+        <h2>Esa dirección no es válida</h2>
+        <p>El identificador de una actividad debe ser un número entero positivo.</p>
+      </section>
+    }
+    @case ('ausente') {
+      <section class="estado-detalle" aria-live="polite">
+        <h2>Esa actividad no existe o se eliminó</h2>
+        <p>Puede que el enlace sea antiguo o que la actividad se haya quitado del tablero.</p>
+      </section>
+    }
+  }
+</div>

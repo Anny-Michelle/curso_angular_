@@ -2,16 +2,29 @@
 
 <header class="cabecera">
   <div class="contenedor">
-    <a class="marca" href="#contenido" aria-label="Ir al tablero de matemáticas">
+    <a class="marca" routerLink="/actividades" aria-label="Ir a las actividades">
       <span>Tablero de matemáticas</span>
     </a>
+    <nav aria-label="Principal">
+      <ul class="menu">
+        <li>
+          <a routerLink="/actividades" routerLinkActive="activo" ariaCurrentWhenActive="page">
+            Actividades
+          </a>
+        </li>
+        <li>
+          <a routerLink="/estadisticas" routerLinkActive="activo" ariaCurrentWhenActive="page">
+            Estadísticas
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </header>
 
 <main id="contenido" class="contenedor">
   <h1>Panel de actividades</h1>
-  <app-pagina-actividades />
-  <app-pagina-estadisticas />
+  <router-outlet />
 </main>
 
 <footer class="pie-pagina">
@@ -20,5 +33,3 @@
     <span>Seguimiento claro y motivador para estudiar</span>
   </div>
 </footer>
-
-<router-outlet />

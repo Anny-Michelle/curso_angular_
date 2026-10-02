@@ -1,0 +1,77 @@
+.detalle {
+  display: grid;
+  gap: 1.25rem;
+  margin: 1rem 0 2rem;
+}
+
+.detalle > a {
+  width: fit-content;
+  color: #4b2d3b;
+  font-weight: 700;
+}
+
+.contenido-detalle,
+.estado-detalle {
+  max-width: 42rem;
+  padding: 1.5rem;
+  border: 1px solid #ead9dc;
+  border-radius: 0.5rem;
+  background: #fffdfb;
+}
+
+.contenido-detalle h2,
+.estado-detalle h2 {
+  margin: 0.35rem 0 1rem;
+  overflow-wrap: anywhere;
+  color: #4b2d3b;
+  font-family: Georgia, serif;
+}
+
+.etiqueta {
+  margin: 0;
+  color: #537b69;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+dl {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+}
+
+dl div {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.35fr) 1fr;
+  gap: 1rem;
+}
+
+dt {
+  font-weight: 700;
+}
+
+dd {
+  margin: 0;
+}
+
+.boton-eliminar {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #b54866;
+  border-radius: 0.4rem;
+  background: #fff;
+  color: #8f405e;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.estado-detalle p {
+  margin: 0;
+}
+
+@media (max-width: 32rem) {
+  .contenido-detalle,
+  .estado-detalle {
+    padding: 1rem;
+  }
+}

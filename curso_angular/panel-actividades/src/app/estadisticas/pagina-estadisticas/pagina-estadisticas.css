@@ -10,15 +10,20 @@
 }
 
 .encabezado-estadisticas {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 1.25rem;
 }
 
 .etiqueta {
-  margin: 0 0 0.3rem;
+  margin: 0.25rem 0 0;
   color: #537b69;
-  font-size: 0.7rem;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 0.9rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .encabezado-estadisticas h2 {
@@ -88,5 +93,11 @@
 
   .cifras li:nth-child(even) {
     padding-right: 0.25rem;
+  }
+}
+
+@media (max-width: 24rem) {
+  .encabezado-estadisticas {
+    flex-wrap: wrap;
   }
 }

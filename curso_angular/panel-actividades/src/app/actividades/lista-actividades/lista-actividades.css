@@ -16,6 +16,13 @@
   min-width: 0;
 }
 
+.enlace-detalle {
+  display: inline-block;
+  margin: 0.55rem 0 0 0.25rem;
+  color: #4b2d3b;
+  font-weight: 700;
+}
+
 .vacio {
   border: 1px dashed rgba(79, 70, 229, 0.45);
   border-radius: 1rem;
