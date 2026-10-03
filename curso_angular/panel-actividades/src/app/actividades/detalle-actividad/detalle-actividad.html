@@ -12,7 +12,19 @@
             <div><dt>Prioridad</dt><dd>{{ actual.prioridad }}</dd></div>
             <div><dt>Creada</dt><dd>{{ actual.creadaEn }}</dd></div>
           </dl>
-          <button class="boton-eliminar" type="button" (click)="eliminar()">Eliminar actividad</button>
+          @if (actual.descripcion) {
+            <p class="descripcion">{{ actual.descripcion }}</p>
+          }
+          <div class="acciones">
+            <a [routerLink]="['/actividades', actual.id, 'editar']">Editar</a>
+            <button
+              class="boton-eliminar"
+              type="button"
+              [attr.aria-label]="'Eliminar ' + actual.titulo"
+              (click)="eliminar()">
+              Eliminar
+            </button>
+          </div>
         </article>
       }
     }

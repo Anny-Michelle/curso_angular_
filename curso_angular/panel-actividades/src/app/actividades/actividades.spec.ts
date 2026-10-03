@@ -32,6 +32,18 @@ describe('ActividadesService', () => {
     expect(servicio.aviso()).toBe('');
   });
 
+  it('migra actividades guardadas antes de incorporar la descripción', () => {
+    const anteriores = [
+      { id: 21, titulo: 'Actividad anterior', estado: 'pendiente', prioridad: 'media', creadaEn: '2026-08-20', destacada: false },
+    ];
+    localStorage.setItem(CLAVE, JSON.stringify(anteriores));
+
+    const servicio = TestBed.inject(ActividadesService);
+
+    expect(servicio.actividades()).toEqual([{ ...anteriores[0], descripcion: '' }]);
+    expect(JSON.parse(localStorage.getItem(CLAVE) ?? 'null')).toEqual(servicio.actividades());
+  });
+
   it('avisa ante datos corruptos y conserva el valor original', () => {
     localStorage.setItem(CLAVE, '{roto');
 

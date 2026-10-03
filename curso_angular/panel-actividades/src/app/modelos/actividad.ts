@@ -5,11 +5,18 @@ export type Prioridad = 'baja' | 'media' | 'alta';
 export interface Actividad {
   id: number;
   titulo: string;
+  descripcion: string;
   estado: EstadoActividad;
   prioridad: Prioridad;
   creadaEn: string;
   destacada: boolean;
 }
+
+export const LIMITES = {
+  tituloMin: 3,
+  tituloMax: 80,
+  descripcionMax: 300,
+} as const;
 
 export type FiltroEstado = EstadoActividad | 'todas';
 
@@ -42,6 +49,7 @@ export function esActividad(valor: unknown): valor is Actividad {
     valor['id'] > 0 &&
     typeof valor['titulo'] === 'string' &&
     valor['titulo'].trim().length > 0 &&
+    typeof valor['descripcion'] === 'string' &&
     esEstadoActividad(valor['estado']) &&
     esPrioridad(valor['prioridad']) &&
     typeof valor['creadaEn'] === 'string' &&

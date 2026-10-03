@@ -61,4 +61,74 @@ describe('rutas de la aplicación', () => {
     await harness.navigateByUrl('/actividades/9999');
     expect(harness.routeNativeElement?.textContent).toContain('Esa actividad no existe o se eliminó');
   });
+
+  it('crea una actividad y conserva los datos si el título está duplicado', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/actividades/nueva');
+
+    const titulo = harness.routeNativeElement?.querySelector<HTMLInputElement>('#titulo');
+    const descripcion = harness.routeNativeElement?.querySelector<HTMLTextAreaElement>('#descripcion');
+    expect(titulo).not.toBeNull();
+    expect(descripcion).not.toBeNull();
+    titulo!.value = 'Revisar funciones trigonométricas';
+    titulo!.dispatchEvent(new Event('input', { bubbles: true }));
+    descripcion!.value = 'No se debe perder este texto.';
+    descripcion!.dispatchEvent(new Event('input', { bubbles: true }));
+    harness.routeNativeElement
+      ?.querySelector('form')
+      ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    await harness.fixture.whenStable();
+
+    expect(harness.routeNativeElement?.querySelector('[role="alert"]')?.textContent)
+      .toContain('Ya existe una actividad');
+    expect(harness.routeNativeElement?.querySelector<HTMLInputElement>('#titulo')?.value)
+      .toBe('Revisar funciones trigonométricas');
+    expect(harness.routeNativeElement?.querySelector<HTMLTextAreaElement>('#descripcion')?.value)
+      .toBe('No se debe perder este texto.');
+  });
+
+  it('muestra errores al enviar el formulario vacío y enfoca el resumen', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/actividades/nueva');
+
+    harness.routeNativeElement
+      ?.querySelector('form')
+      ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    await harness.fixture.whenStable();
+
+    const resumen = harness.routeNativeElement?.querySelector('.resumen-errores');
+    expect(resumen?.textContent)
+      .toContain('El título es obligatorio.');
+    expect(document.activeElement).toBe(resumen);
+    expect(TestBed.inject(Router).url).toBe('/actividades/nueva');
+  });
+
+  it('crea una actividad y permite editarla desde su detalle', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/actividades/nueva');
+
+    const titulo = harness.routeNativeElement?.querySelector<HTMLInputElement>('#titulo');
+    const descripcion = harness.routeNativeElement?.querySelector<HTMLTextAreaElement>('#descripcion');
+    titulo!.value = 'Preparar el informe';
+    titulo!.dispatchEvent(new Event('input', { bubbles: true }));
+    descripcion!.value = 'Resumen de la unidad.';
+    descripcion!.dispatchEvent(new Event('input', { bubbles: true }));
+    harness.routeNativeElement
+      ?.querySelector('form')
+      ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    await harness.fixture.whenStable();
+
+    expect(harness.routeNativeElement?.textContent).toContain('Preparar el informe');
+    expect(harness.routeNativeElement?.textContent).toContain('Resumen de la unidad.');
+
+    await harness.navigateByUrl('/actividades/6/editar');
+    expect(harness.routeNativeElement?.querySelector<HTMLInputElement>('#titulo')?.value)
+      .toBe('Preparar el informe');
+
+    const guardar = harness.routeNativeElement?.querySelector<HTMLButtonElement>('button[type="submit"]');
+    guardar?.click();
+    await harness.fixture.whenStable();
+    expect(harness.routeNativeElement?.textContent).toContain('Preparar el informe');
+    expect(TestBed.inject(Router).url).toBe('/actividades/6');
+  });
 });

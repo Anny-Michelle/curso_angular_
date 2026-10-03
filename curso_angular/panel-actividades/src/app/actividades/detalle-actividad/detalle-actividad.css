@@ -27,6 +27,17 @@
   font-family: Georgia, serif;
 }
 
+.descripcion {
+  overflow-wrap: anywhere;
+}
+
+.acciones {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
 .etiqueta {
   margin: 0;
   color: #537b69;

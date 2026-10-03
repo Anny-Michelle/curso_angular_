@@ -1,19 +1,42 @@
 import { computed, inject, Service, signal } from '@angular/core';
 import { AlmacenamientoService } from '../compartido/almacenamiento';
-import { Actividad, EstadoActividad, esColeccionActividades } from '../modelos/actividad';
+import {
+  Actividad,
+  EstadoActividad,
+  LIMITES,
+  Prioridad,
+  esColeccionActividades,
+} from '../modelos/actividad';
 
 const CLAVE = 'panel.actividades.v1';
 
 const INICIALES: readonly Actividad[] = [
-  { id: 1, titulo: 'Resolver ecuaciones de primer grado', estado: 'completada', prioridad: 'alta', creadaEn: '2026-08-10', destacada: false },
-  { id: 2, titulo: 'Revisar funciones trigonométricas', estado: 'en_progreso', prioridad: 'media', creadaEn: '2026-08-12', destacada: true },
-  { id: 3, titulo: 'Practicar geometría analítica', estado: 'pendiente', prioridad: 'alta', creadaEn: '2026-08-14', destacada: false },
-  { id: 4, titulo: 'Repasar teorema de Pitágoras', estado: 'pendiente', prioridad: 'baja', creadaEn: '2026-08-16', destacada: false },
-  { id: 5, titulo: 'Simular examen de álgebra', estado: 'pendiente', prioridad: 'media', creadaEn: '2026-08-18', destacada: false },
+  { id: 1, titulo: 'Resolver ecuaciones de primer grado', descripcion: '', estado: 'completada', prioridad: 'alta', creadaEn: '2026-08-10', destacada: false },
+  { id: 2, titulo: 'Revisar funciones trigonométricas', descripcion: '', estado: 'en_progreso', prioridad: 'media', creadaEn: '2026-08-12', destacada: true },
+  { id: 3, titulo: 'Practicar geometría analítica', descripcion: '', estado: 'pendiente', prioridad: 'alta', creadaEn: '2026-08-14', destacada: false },
+  { id: 4, titulo: 'Repasar teorema de Pitágoras', descripcion: '', estado: 'pendiente', prioridad: 'baja', creadaEn: '2026-08-16', destacada: false },
+  { id: 5, titulo: 'Simular examen de álgebra', descripcion: '', estado: 'pendiente', prioridad: 'media', creadaEn: '2026-08-18', destacada: false },
 ];
 
 function copiarIniciales(): Actividad[] {
   return INICIALES.map((actividad) => ({ ...actividad }));
+}
+
+function completarDescripcion(valor: unknown): unknown {
+  if (!Array.isArray(valor)) return valor;
+
+  return valor.map((elemento: unknown) => {
+    if (
+      typeof elemento !== 'object' ||
+      elemento === null ||
+      Array.isArray(elemento) ||
+      'descripcion' in elemento
+    ) {
+      return elemento;
+    }
+
+    return { ...elemento, descripcion: '' };
+  });
 }
 
 @Service()
@@ -42,6 +65,55 @@ export class ActividadesService {
 
   buscarPorId(id: number): Actividad | undefined {
     return this.lista().find((actividad) => actividad.id === id);
+  }
+
+  existeTitulo(titulo: string, exceptoId: number | null = null): boolean {
+    const normalizado = titulo.trim().toLocaleLowerCase('es');
+    return this.lista().some(
+      (actividad) =>
+        actividad.id !== exceptoId &&
+        actividad.titulo.toLocaleLowerCase('es') === normalizado,
+    );
+  }
+
+  crear(titulo: string, descripcion: string, prioridad: Prioridad): Actividad | null {
+    const limpio = titulo.trim();
+    if (!this.tituloAceptable(limpio, null) || descripcion.length > LIMITES.descripcionMax) {
+      return null;
+    }
+
+    const nueva: Actividad = {
+      id: this.siguienteId(),
+      titulo: limpio,
+      descripcion: descripcion.trim(),
+      estado: 'pendiente',
+      prioridad,
+      creadaEn: new Date().toISOString().slice(0, 10),
+      destacada: false,
+    };
+
+    this.aplicar((actuales) => [...actuales, nueva]);
+    return nueva;
+  }
+
+  actualizar(id: number, titulo: string, descripcion: string, prioridad: Prioridad): boolean {
+    const limpio = titulo.trim();
+    if (
+      !this.buscarPorId(id) ||
+      !this.tituloAceptable(limpio, id) ||
+      descripcion.length > LIMITES.descripcionMax
+    ) {
+      return false;
+    }
+
+    this.aplicar((actuales) =>
+      actuales.map((actividad) =>
+        actividad.id === id
+          ? { ...actividad, titulo: limpio, descripcion: descripcion.trim(), prioridad }
+          : actividad,
+      ),
+    );
+    return true;
   }
 
   alternarDestacada(id: number): boolean {
@@ -92,20 +164,40 @@ export class ActividadesService {
     }
 
     const valor = this.almacen.leer(CLAVE);
-    if (!esColeccionActividades(valor)) {
+    const compatible = esColeccionActividades(valor) ? valor : completarDescripcion(valor);
+    if (!esColeccionActividades(compatible)) {
       this.lista.set(copiarIniciales());
       this.avisoInterno.set('No se pudo leer lo guardado. Se muestran las actividades de ejemplo.');
       return;
     }
 
-    this.lista.set(valor.map((actividad) => ({ ...actividad })));
+    this.lista.set(compatible.map((actividad) => ({ ...actividad })));
     this.avisoInterno.set('');
-    this.sinGuardarInterno.set(false);
+    this.sinGuardarInterno.set(
+      !esColeccionActividades(valor) && !this.almacen.guardar(CLAVE, compatible),
+    );
   }
 
   private siguienteEstado(estado: EstadoActividad): EstadoActividad {
     if (estado === 'pendiente') return 'en_progreso';
     if (estado === 'en_progreso') return 'completada';
     return 'completada';
+  }
+
+  private tituloAceptable(limpio: string, salvo: number | null): boolean {
+    if (limpio.length < LIMITES.tituloMin || limpio.length > LIMITES.tituloMax) {
+      return false;
+    }
+
+    const normalizado = limpio.toLocaleLowerCase('es');
+    return !this.lista().some(
+      (actividad) =>
+        actividad.id !== salvo &&
+        actividad.titulo.toLocaleLowerCase('es') === normalizado,
+    );
+  }
+
+  private siguienteId(): number {
+    return this.lista().reduce((mayor, actividad) => Math.max(mayor, actividad.id), 0) + 1;
   }
 }

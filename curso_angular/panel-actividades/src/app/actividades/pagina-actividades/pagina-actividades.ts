@@ -1,5 +1,6 @@
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ETIQUETAS, FiltroEstado, FiltroPrioridad, Prioridad } from '../../modelos/actividad';
 import { FiltrosActividades } from '../filtros-actividades/filtros-actividades';
 import { ListaActividades } from '../lista-actividades/lista-actividades';
@@ -9,7 +10,7 @@ import { ActividadesService } from '../actividades';
 
 @Component({
   selector: 'app-pagina-actividades',
-  imports: [PanelSeccion, ResumenActividades, FiltrosActividades, ListaActividades],
+  imports: [PanelSeccion, ResumenActividades, FiltrosActividades, ListaActividades, RouterLink],
   templateUrl: './pagina-actividades.html',
   styleUrl: './pagina-actividades.css',
 })
