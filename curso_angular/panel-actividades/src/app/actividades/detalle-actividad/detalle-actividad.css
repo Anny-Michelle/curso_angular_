@@ -17,6 +17,8 @@
   border: 1px solid #ead9dc;
   border-radius: 0.5rem;
   background: #fffdfb;
+  color: #3f3740;
+  font-family: 'Trebuchet MS', sans-serif;
 }
 
 .contenido-detalle h2,
@@ -25,10 +27,15 @@
   overflow-wrap: anywhere;
   color: #4b2d3b;
   font-family: Georgia, serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  line-height: 1.2;
 }
 
 .descripcion {
+  margin: 0 0 1rem;
   overflow-wrap: anywhere;
+  font-size: 1rem;
+  line-height: 1.65;
 }
 
 .acciones {
@@ -41,14 +48,17 @@
 .etiqueta {
   margin: 0;
   color: #537b69;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
 dl {
   display: grid;
   gap: 0.75rem;
   margin: 0 0 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 dl div {
