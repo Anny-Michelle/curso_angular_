@@ -7,6 +7,7 @@ import {
   Prioridad,
   esColeccionActividades,
 } from '../modelos/actividad';
+import { ActividadesApi } from './actividades-api';
 
 const CLAVE = 'panel.actividades.v1';
 
@@ -42,13 +43,18 @@ function completarDescripcion(valor: unknown): unknown {
 @Service()
 export class ActividadesService {
   private readonly almacen = inject(AlmacenamientoService);
+  private readonly api = inject(ActividadesApi, { optional: true });
   private readonly lista = signal<Actividad[]>(copiarIniciales());
   private readonly avisoInterno = signal('');
   private readonly sinGuardarInterno = signal(false);
+  private readonly cargandoInterno = signal(false);
+  private readonly errorCargaInterna = signal<string | null>(null);
 
   readonly actividades = this.lista.asReadonly();
   readonly aviso = this.avisoInterno.asReadonly();
   readonly sinGuardar = this.sinGuardarInterno.asReadonly();
+  readonly cargando = this.cargandoInterno.asReadonly();
+  readonly errorCarga = this.errorCargaInterna.asReadonly();
 
   readonly total = computed(() => this.lista().length);
   readonly pendientes = computed(() => this.lista().filter((actividad) => actividad.estado === 'pendiente').length);
@@ -61,6 +67,10 @@ export class ActividadesService {
     window.addEventListener('storage', (evento) => {
       if (evento.key === CLAVE) this.cargar();
     });
+  }
+
+  recargar(): void {
+    this.cargar();
   }
 
   buscarPorId(id: number): Actividad | undefined {
@@ -93,6 +103,16 @@ export class ActividadesService {
     };
 
     this.aplicar((actuales) => [...actuales, nueva]);
+    if (this.api) {
+      this.api.crear({ titulo: limpio, descripcion: descripcion.trim(), prioridad }).subscribe({
+        next: (remota) => {
+          this.lista.update((actuales) => actuales.map((actual) => actual.id === nueva.id ? remota : actual));
+        },
+        error: () => {
+          this.avisoInterno.set('No se pudo guardar la actividad en el servidor.');
+        },
+      });
+    }
     return nueva;
   }
 
@@ -113,6 +133,16 @@ export class ActividadesService {
           : actividad,
       ),
     );
+    if (this.api) {
+      this.api.actualizar(id, { titulo: limpio, descripcion: descripcion.trim(), prioridad }).subscribe({
+        next: (remota) => {
+          this.lista.update((actuales) => actuales.map((actual) => actual.id === id ? remota : actual));
+        },
+        error: () => {
+          this.avisoInterno.set('No se pudo guardar la actividad en el servidor.');
+        },
+      });
+    }
     return true;
   }
 
@@ -144,6 +174,13 @@ export class ActividadesService {
     if (!this.buscarPorId(id)) return false;
 
     this.aplicar((actuales) => actuales.filter((actividad) => actividad.id !== id));
+    if (this.api) {
+      this.api.eliminar(id).subscribe({
+        error: () => {
+          this.avisoInterno.set('No se pudo eliminar la actividad en el servidor.');
+        },
+      });
+    }
     return true;
   }
 
@@ -153,13 +190,53 @@ export class ActividadesService {
 
   private aplicar(cambio: (actuales: Actividad[]) => Actividad[]): void {
     this.lista.update(cambio);
+    if (this.api) {
+      this.sinGuardarInterno.set(false);
+      return;
+    }
+
     this.sinGuardarInterno.set(!this.almacen.guardar(CLAVE, this.lista()));
   }
 
   private cargar(): void {
+    this.cargandoInterno.set(true);
+    this.errorCargaInterna.set(null);
+
+    if (this.api) {
+      this.api.listar().subscribe({
+        next: (actividades) => {
+          this.lista.set(actividades.map((actividad) => ({ ...actividad })));
+          this.avisoInterno.set('');
+          this.sinGuardarInterno.set(false);
+          this.errorCargaInterna.set(null);
+          this.cargandoInterno.set(false);
+        },
+        error: () => {
+          const valor = this.almacen.leer(CLAVE);
+          const compatible = esColeccionActividades(valor) ? valor : completarDescripcion(valor);
+          if (!esColeccionActividades(compatible)) {
+            this.lista.set(copiarIniciales());
+            this.avisoInterno.set('No se pudo leer lo guardado. Se muestran las actividades de ejemplo.');
+            this.sinGuardarInterno.set(false);
+            this.errorCargaInterna.set('No se pudieron cargar las actividades. Reinténtalo en unos segundos.');
+            this.cargandoInterno.set(false);
+            return;
+          }
+
+          this.lista.set(compatible.map((actividad) => ({ ...actividad })));
+          this.avisoInterno.set('');
+          this.sinGuardarInterno.set(false);
+          this.errorCargaInterna.set('No se pudieron cargar las actividades. Se muestran los datos guardados localmente.');
+          this.cargandoInterno.set(false);
+        },
+      });
+      return;
+    }
+
     if (!this.almacen.existe(CLAVE)) {
       this.lista.set(copiarIniciales());
       this.avisoInterno.set('');
+      this.cargandoInterno.set(false);
       return;
     }
 
@@ -176,6 +253,8 @@ export class ActividadesService {
     this.sinGuardarInterno.set(
       !esColeccionActividades(valor) && !this.almacen.guardar(CLAVE, compatible),
     );
+    this.errorCargaInterna.set(null);
+    this.cargandoInterno.set(false);
   }
 
   private siguienteEstado(estado: EstadoActividad): EstadoActividad {

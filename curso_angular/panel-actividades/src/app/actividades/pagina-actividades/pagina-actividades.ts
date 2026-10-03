@@ -23,6 +23,8 @@ export class PaginaActividades {
   protected readonly actividades = this.servicio.actividades;
   protected readonly aviso = this.servicio.aviso;
   protected readonly sinGuardar = this.servicio.sinGuardar;
+  protected readonly cargando = this.servicio.cargando;
+  protected readonly errorCarga = this.servicio.errorCarga;
 
   readonly buscar = input<string | undefined>('');
   readonly estado = input<string | undefined>('todas');
@@ -75,6 +77,10 @@ export class PaginaActividades {
     effect(() => {
       console.info(`[Tablero] ${this.mostradas()} de ${this.total()} visibles`);
     });
+  }
+
+  protected recargar(): void {
+    this.servicio.recargar();
   }
 
   protected alternarDestacada(id: number): void {

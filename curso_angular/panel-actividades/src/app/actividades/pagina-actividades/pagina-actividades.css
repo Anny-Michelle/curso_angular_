@@ -111,3 +111,23 @@
   background: #fff7e6;
   color: #66422f;
 }
+
+.estado-carga,
+.estado-error {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+}
+
+.estado-carga {
+  border: 1px solid rgba(83, 123, 105, 0.25);
+  background: rgba(83, 123, 105, 0.08);
+  color: #365947;
+}
+
+.estado-error {
+  border: 1px solid rgba(181, 72, 102, 0.25);
+  background: rgba(181, 72, 102, 0.06);
+  color: #7d3553;
+}

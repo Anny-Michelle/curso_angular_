@@ -22,6 +22,13 @@
     </p>
   }
 
+  @if (cargando()) {
+    <p class="estado-carga" role="status">Cargando actividades…</p>
+  } @else if (errorCarga()) {
+    <p class="estado-error" role="alert">{{ errorCarga() }}</p>
+    <button class="boton-secundario" type="button" (click)="recargar()">Reintentar</button>
+  }
+
   <app-panel-seccion titulo="Resumen">
     <app-resumen-actividades
       [total]="total()"
