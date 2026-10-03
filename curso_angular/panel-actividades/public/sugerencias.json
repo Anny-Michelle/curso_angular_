@@ -1,14 +1,14 @@
 [
   {
-    "titulo": "Revisar el contraste de los estados",
-    "motivo": "El color no puede ser lo único que distinga pendiente de completada."
+    "titulo": "Practicar un tema a la vez",
+    "motivo": "Elige una actividad de álgebra, geometría o trigonometría y resuelve varios ejercicios antes de cambiar de tema."
   },
   {
-    "titulo": "Comprobar la vista a 320 píxeles",
-    "motivo": "Es el ancho más estrecho que hay que soportar."
+    "titulo": "Intenta resolver antes de consultar la solución",
+    "motivo": "Anota los pasos que probarías y luego compara tu procedimiento con un ejemplo resuelto."
   },
   {
-    "titulo": "Recorrer la aplicación con el teclado",
-    "motivo": "Todo lo que se pulsa tiene que alcanzarse con Tab."
+    "titulo": "Repasa los errores al terminar",
+    "motivo": "Vuelve a las actividades que te costaron y escribe qué regla matemática te ayudará la próxima vez."
   }
 ]

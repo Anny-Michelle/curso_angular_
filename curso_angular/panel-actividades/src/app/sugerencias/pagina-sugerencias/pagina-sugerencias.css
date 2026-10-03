@@ -5,34 +5,108 @@
   align-items: flex-start;
 }
 
+.sugerencias {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  border: 1px solid rgba(181, 72, 102, 0.18);
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, #fffdfb 0%, #fbf3f0 100%);
+  box-shadow: 0 1rem 2rem rgba(75, 45, 59, 0.08);
+}
+
+.sugerencias h2 {
+  margin: 0 0 0.25rem;
+  color: #4b2d3b;
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+}
+
 .lista-sugerencias {
-  list-style: none;
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.75rem;
+  list-style: none;
 }
 
 .lista-sugerencias li {
-  border: 1px solid #d4d4d4;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
   min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-left: 4px solid rgba(181, 72, 102, 0.72);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fff9f6 100%);
+  box-shadow: 0 0.5rem 1rem rgba(75, 45, 59, 0.06);
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.lista-sugerencias li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.8rem 1.4rem rgba(75, 45, 59, 0.1);
 }
 
 .lista-sugerencias h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
+  margin: 0 0 0.35rem;
+  color: #3f3740;
+  font-size: 1.05rem;
 }
 
 .lista-sugerencias p {
   margin: 0;
+  color: #52606d;
   overflow-wrap: anywhere;
 }
 
+.cargando,
+.error,
 .vacio {
-  border: 1px dashed #949494;
-  border-radius: 0.5rem;
-  padding: 1rem;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(181, 72, 102, 0.2);
+  border-left: 4px solid #b54866;
+  border-radius: 0.65rem;
+  background: #fff9f6;
+  color: #4b2d3b;
+}
+
+.error {
+  border-color: rgba(181, 72, 102, 0.3);
+  background: #fff1f2;
+  color: #7d3553;
+}
+
+.sugerencias button {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid rgba(181, 72, 102, 0.2);
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, #b54866 0%, #8f405e 100%);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.sugerencias button:hover {
+  filter: brightness(0.95);
+}
+
+.sugerencias button:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+@media (max-width: 36rem) {
+  .sugerencias {
+    margin: 1.5rem 0;
+    padding: 1rem;
+  }
 }

@@ -2,8 +2,8 @@
   "actividades": [
     {
       "id": "1",
-      "task_title": "Revisar el informe",
-      "description": null,
+      "task_title": "Resolver ecuaciones lineales",
+      "description": "Practicar ecuaciones de primer grado.",
       "priority_level": 3,
       "is_done": false,
       "created_at": "2026-08-10T09:00:00Z",
@@ -11,8 +11,8 @@
     },
     {
       "id": "2",
-      "task_title": "Preparar la reunión",
-      "description": null,
+      "task_title": "Practicar funciones trigonométricas",
+      "description": "Repasar seno, coseno y tangente.",
       "priority_level": 2,
       "is_done": false,
       "created_at": "2026-08-12T09:00:00Z",
@@ -20,28 +20,12 @@
     },
     {
       "id": "3",
-      "task_title": "Llamar al proveedor",
-      "description": null,
+      "task_title": "Calcular áreas de triángulos",
+      "description": "Aplicar la fórmula de base por altura.",
       "priority_level": 1,
       "is_done": true,
       "created_at": "2026-08-14T09:00:00Z",
       "destacada": false
-    },
-    {
-      "id": "86a2",
-      "task_title": "Practicar Álgebra",
-      "description": null,
-      "priority_level": 2,
-      "is_done": false,
-      "created_at": "2026-10-03T04:46:27.764Z"
-    },
-    {
-      "id": "54de",
-      "task_title": "Practicar Álgebra 2",
-      "description": "Practicar Álgebra 2",
-      "priority_level": 2,
-      "is_done": false,
-      "created_at": "2026-10-03T04:47:36.760Z"
     }
   ]
 }
